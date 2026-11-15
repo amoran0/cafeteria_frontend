@@ -5,8 +5,8 @@
 
 <div class="indicadores">
   <app-tarjeta-indicador etiqueta="Activos" [valor]="servicioCupones.activos()" />
-  <app-tarjeta-indicador etiqueta="Canjes este mes" [valor]="servicioCupones.canjesMes()" />
-  <app-tarjeta-indicador etiqueta="Descuento concedido" [valor]="formatearEuros(servicioCupones.descuentoConcedido())" />
+  <app-tarjeta-indicador etiqueta="Canjes" [valor]="servicioCupones.canjes()" />
+  <app-tarjeta-indicador etiqueta="Personales" [valor]="servicioCupones.personales()" />
 </div>
 
 <div class="distribucion">
@@ -18,8 +18,11 @@
         <app-campo-busqueda [(valor)]="textoBusqueda" textoIndicativo="Código…" />
       </div>
     </div>
+    @if (resultadoEliminacion(); as resultado) {
+      <app-aviso [tono]="resultado.tono">{{ resultado.texto }}</app-aviso>
+    }
     <ul class="cupones">
-      @for (cupon of cuponesFiltrados(); track cupon.codigo) {
+      @for (cupon of cuponesFiltrados(); track cupon.id) {
         <li class="cupon">
           <div class="expandir">
             <strong>{{ cupon.codigo }}</strong>
@@ -33,7 +36,10 @@
             <app-etiqueta-estado [estado]="servicioCupones.estado(cupon)" [texto]="servicioCupones.estado(cupon) === 'agotado' ? 'Usos agotados' : undefined"
               [tono]="servicioCupones.estado(cupon) === 'agotado' ? 'peligro' : undefined" />
           </div>
-          <button type="button" class="boton boton--discreto boton--pequeno" (click)="editarCupon(cupon)" [attr.aria-label]="'Editar ' + cupon.codigo">Editar</button>
+          <div class="fila cupon__acciones">
+            <button type="button" class="boton boton--discreto boton--pequeno" (click)="editarCupon(cupon)" [attr.aria-label]="'Editar ' + cupon.codigo">Editar</button>
+            <button type="button" class="boton boton--discreto boton--pequeno" (click)="eliminarCupon(cupon)" [attr.aria-label]="'Eliminar ' + cupon.codigo">Eliminar</button>
+          </div>
         </li>
       } @empty {
         <li class="atenuado">No hay cupones con ese código.</li>

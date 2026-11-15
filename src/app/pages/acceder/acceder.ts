@@ -1,16 +1,15 @@
 import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Aviso } from '../../components/aviso/aviso';
 import { Icono } from '../../components/icono/icono';
 import { CabeceraPagina } from '../../components/cabecera-pagina/cabecera-pagina';
 import { ServicioAutenticacion, INICIO_POR_ROL } from '../../services/servicio-autenticacion';
-import { USUARIOS_SIMULADOS } from '../../services/datos-simulados';
 import { entorno } from '../../../entornos/entorno';
 
 @Component({
   selector: 'app-pagina-acceder',
-  imports: [ReactiveFormsModule, CabeceraPagina, Aviso, Icono],
+  imports: [ReactiveFormsModule, CabeceraPagina, Aviso, Icono, RouterLink],
   templateUrl: './acceder.html',
   styleUrl: './acceder.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,9 +27,13 @@ export class PaginaAcceder {
   });
   protected readonly enviando = signal(false);
   protected readonly error = signal<string | null>(null);
-  /** Accesos de demostración: solo con datos de ejemplo. */
-  protected readonly usuariosDemostracion = entorno.usarDatosSimulados ? USUARIOS_SIMULADOS : [];
-  protected readonly etiquetaPorRol = { cliente: 'Cliente', barista: 'Barista', admin: 'Admin' };
+  /** Accesos rápidos con las cuentas del script SQL (solo en desarrollo, ver `entorno`). */
+  protected readonly usuariosDemostracion = entorno.cuentasDemostracion;
+  protected readonly etiquetaPorRol: Record<string, string> = {
+    cliente: 'Cliente',
+    barista: 'Barista',
+    admin: 'Admin',
+  };
 
   protected enviar(): void {
     if (this.formulario.invalid) {
@@ -40,7 +43,8 @@ export class PaginaAcceder {
     this.enviando.set(true);
     this.error.set(null);
     this.autenticacion.iniciarSesion(this.formulario.getRawValue()).subscribe({
-      next: (sesion) => this.enrutador.navigateByUrl(this.volver() || INICIO_POR_ROL[sesion.usuario.rol]),
+      next: (sesion) =>
+        this.enrutador.navigateByUrl(this.volver() || INICIO_POR_ROL[sesion.usuario.rol]),
       error: (errorInicio: Error) => {
         this.error.set(errorInicio.message || 'No se ha podido iniciar sesión.');
         this.enviando.set(false);

@@ -1,6 +1,20 @@
-<app-cabecera-pagina titulo="Cola de pedidos" [subtitulo]="'Priorizada por estado y antigüedad; actualizada ' + tiempoDesdeActualizacion() + '.'">
-  <button type="button" class="boton boton--secundario" (click)="servicioPedidos.cargar()"><app-icono nombre="actualizar" /> Actualizar cola</button>
+<app-cabecera-pagina
+  titulo="Cola de pedidos"
+  [subtitulo]="'Priorizada por estado y antigüedad; se actualiza sola cada ' + segundosEntreActualizaciones + ' s (última: ' + tiempoDesdeActualizacion() + ').'"
+>
+  <button type="button" class="boton boton--secundario" (click)="servicioPedidos.cargar()" [disabled]="servicioPedidos.cargando()">
+    <app-icono nombre="actualizar" /> {{ servicioPedidos.cargando() ? 'Actualizando…' : 'Actualizar cola' }}
+  </button>
 </app-cabecera-pagina>
+
+@if (servicioPedidos.error(); as mensajeError) {
+  <app-aviso tono="peligro" titulo="No se ha podido actualizar la cola">
+    {{ mensajeError }} Se volverá a intentar automáticamente.
+  </app-aviso>
+}
+@if (errorAccion(); as mensajeErrorAccion) {
+  <app-aviso tono="peligro" titulo="La acción no se ha completado">{{ mensajeErrorAccion }}</app-aviso>
+}
 
 <div class="indicadores">
   <app-tarjeta-indicador etiqueta="Pendientes" [valor]="servicioPedidos.cantidadPorEstado().pendiente"
@@ -28,11 +42,9 @@
       </span>
       <p>{{ resumenLineas(pedido.lineas) }}</p>
       <div class="fila etiquetas">
-        <app-etiqueta-estado [estado]="pedido.pagado ? 'pagado' : 'pendiente'" [texto]="pedido.pagado ? 'Pagado' : 'Sin pagar'" />
-        @if (pedido.alergiasDeclaradas) {
-          <app-etiqueta-estado tono="advertencia" [texto]="'Alergia: ' + pedido.alergiasDeclaradas" />
-        } @else {
-          <app-etiqueta-estado tono="neutro" texto="Sin alergias declaradas" />
+        <app-etiqueta-estado tono="neutro" [texto]="'Total ' + formatearEuros(pedido.total)" />
+        @if (pedido.descuento; as descuento) {
+          <app-etiqueta-estado tono="informacion" [texto]="descuento.etiqueta" />
         }
       </div>
       <div class="fila acciones">
