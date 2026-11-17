@@ -200,7 +200,7 @@ export interface VentaFranjaApi {
 
 // ─── Autenticación (NUEVO, con Spring Security + JWT) ───────────────────────
 
-export type RolApi = 'ADMIN' | 'BARISTA' | 'CAMARERO' | 'CLIENTE';
+export type RolApi = 'ADMIN' | 'BARISTA' | 'CLIENTE';
 
 export interface UsuarioApi {
   id: string;

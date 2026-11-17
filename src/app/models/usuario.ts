@@ -1,4 +1,4 @@
-/** Los cuatro roles de la aplicación. `publico` es el visitante sin sesión. */
+/** Roles de la interfaz: `cliente`, `barista` y `admin` son los roles reales (con cuenta y JWT); `publico` es solo el estado sin sesión, no un rol del backend. */
 export type Rol = 'publico' | 'cliente' | 'barista' | 'admin';
 
 export interface Usuario {
