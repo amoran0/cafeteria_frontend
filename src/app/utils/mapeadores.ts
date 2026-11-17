@@ -195,11 +195,10 @@ export function cuponAPeticion(cupon: Cupon): CuponPeticionApi {
 
 // ─── Usuarios y sesión ──────────────────────────────────────────────────────
 
-/** El CAMARERO usa las pantallas del barista (cola de pedidos y disponibilidad). */
+/** Traduce el rol de la API (ADMIN, BARISTA, CLIENTE) al rol de la interfaz. Sin sesión, la interfaz usa 'publico'. */
 const ROL_DE_API: Record<RolApi, Usuario['rol']> = {
   ADMIN: 'admin',
   BARISTA: 'barista',
-  CAMARERO: 'barista',
   CLIENTE: 'cliente',
 };
 

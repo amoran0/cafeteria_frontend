@@ -89,7 +89,7 @@ export function crearBaseDatosSimulada(): BaseDatosSimulada {
     usuarios: [
       { id: idUsuario(11), rol: 'ADMIN', email: 'gerencia@cafeteria.com', contrasena: 'admin123' },
       { id: idUsuario(12), rol: 'BARISTA', email: 'marcos.barista@cafeteria.com', contrasena: 'hash_pass_barista1' },
-      { id: idUsuario(13), rol: 'CAMARERO', email: 'lucia.camarera@cafeteria.com', contrasena: 'hash_pass_camarero2' },
+      { id: idUsuario(13), rol: 'BARISTA', email: 'lucia.barista@cafeteria.com', contrasena: 'hash_pass_barista2' },
       { id: idUsuario(14), rol: 'CLIENTE', email: 'carlos.gomez@gmail.com', contrasena: 'hash_pass_123' },
       { id: idUsuario(15), rol: 'CLIENTE', email: 'maria.lopez@yahoo.com', contrasena: 'hash_pass_456' },
       { id: idUsuario(16), rol: 'CLIENTE', email: 'juan.perez@hotmail.com', contrasena: 'hash_pass_789' },

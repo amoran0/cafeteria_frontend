@@ -467,7 +467,7 @@ function listarPedidos(usuario: UsuarioSimulado, peticion: PeticionSimulada): Pa
   return paginar(pedidos.map(pedidoApi), peticion);
 }
 
-function cambiarEstadoPedido(usuario: UsuarioSimulado, id: string, cuerpo: { estado?: string }): PedidoApi {
+function cambiarEstadoPedido(id: string, cuerpo: { estado?: string }): PedidoApi {
   const pedido = buscarPedido(id);
   validar({ estado: !cuerpo?.estado && 'El estado es obligatorio' });
   const nuevo = cuerpo.estado as EstadoPedidoApi;
@@ -477,11 +477,6 @@ function cambiarEstadoPedido(usuario: UsuarioSimulado, id: string, cuerpo: { est
       'Cuerpo de la petición no válido',
       `El campo 'estado' tiene un valor no válido ('${nuevo}'). Valores admitidos: [${Object.keys(TRANSICIONES).join(', ')}]`,
     );
-  if (usuario.rol === 'CLIENTE') {
-    comprobarPropietario(usuario, pedido);
-    if (nuevo !== 'CANCELADO')
-      throw new ErrorSimulado(403, 'Acceso denegado', 'Un cliente solo puede cancelar sus pedidos');
-  }
   if (!TRANSICIONES[pedido.estado].includes(nuevo))
     throw reglaNegocio(
       `El pedido ${id} no puede pasar de ${pedido.estado} a ${nuevo}. Transiciones válidas: PENDIENTE → EN_PREPARACION → LISTO → ENTREGADO y PENDIENTE → CANCELADO (RN-08)`,
@@ -623,7 +618,7 @@ const RUTAS: [metodo: string, patron: RegExp, manejador: Manejador][] = [
     return ok(guardarProducto(buscarProducto(id), p.cuerpo as ProductoPeticionApi));
   }],
   ['PATCH', new RegExp(`^/productos/${ID}/disponibilidad$`), (p, [id]) => {
-    exigirRol(p, 'ADMIN', 'BARISTA', 'CAMARERO');
+    exigirRol(p, 'ADMIN', 'BARISTA');
     const { disponible } = (p.cuerpo ?? {}) as { disponible?: boolean };
     validar({ disponible: typeof disponible !== 'boolean' && 'El campo disponible es obligatorio (true o false)' });
     const producto = buscarProductoActivo(id);
@@ -672,7 +667,7 @@ const RUTAS: [metodo: string, patron: RegExp, manejador: Manejador][] = [
     return sinContenido();
   }],
   ['PATCH', new RegExp(`^/categorias/${ID}/disponibilidad$`), (p, [id]) => {
-    exigirRol(p, 'ADMIN', 'BARISTA', 'CAMARERO');
+    exigirRol(p, 'ADMIN', 'BARISTA');
     const { disponible } = (p.cuerpo ?? {}) as { disponible?: boolean };
     validar({ disponible: typeof disponible !== 'boolean' && 'El campo disponible es obligatorio (true o false)' });
     const categoria = bd.categorias.find((categoriaBuscada) => categoriaBuscada.id === id);
@@ -683,16 +678,16 @@ const RUTAS: [metodo: string, patron: RegExp, manejador: Manejador][] = [
   }],
 
   // Pedidos (9–12)
-  ['POST', /^\/pedidos$/, (p) => creado(crearPedido(exigirRol(p, 'BARISTA', 'CAMARERO', 'CLIENTE'), p.cuerpo as PedidoPeticionApi))],
-  ['GET', /^\/pedidos$/, (p) => ok(listarPedidos(exigirRol(p, 'ADMIN', 'BARISTA', 'CAMARERO', 'CLIENTE'), p))],
+  ['POST', /^\/pedidos$/, (p) => creado(crearPedido(exigirRol(p, 'BARISTA', 'CLIENTE'), p.cuerpo as PedidoPeticionApi))],
+  ['GET', /^\/pedidos$/, (p) => ok(listarPedidos(exigirRol(p, 'ADMIN', 'BARISTA', 'CLIENTE'), p))],
   ['GET', new RegExp(`^/pedidos/${ID}$`), (p, [id]) => {
-    const usuario = exigirRol(p, 'ADMIN', 'BARISTA', 'CAMARERO', 'CLIENTE');
+    const usuario = exigirRol(p, 'ADMIN', 'BARISTA', 'CLIENTE');
     const pedido = buscarPedido(id);
     comprobarPropietario(usuario, pedido);
     return ok(pedidoApi(pedido));
   }],
   ['PATCH', new RegExp(`^/pedidos/${ID}/estado$`), (p, [id]) =>
-    ok(cambiarEstadoPedido(exigirRol(p, 'ADMIN', 'BARISTA', 'CAMARERO', 'CLIENTE'), id, p.cuerpo as { estado?: string }))],
+    (exigirRol(p, 'ADMIN', 'BARISTA'), ok(cambiarEstadoPedido(id, p.cuerpo as { estado?: string })))],
 
   // Cupones (13–14 + NUEVO)
   ['POST', /^\/cupones\/validar$/, (p) => {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { interval } from 'rxjs';
 import { RouterLink } from '@angular/router';
@@ -34,8 +34,6 @@ export class PaginaMisPedidos {
   protected readonly formatearFechaCorta = formatearFechaCorta;
   protected readonly formatearDescuento = formatearDescuento;
   protected readonly resumenLineas = resumenLineas;
-  protected readonly errorCancelacion = signal<string | null>(null);
-  protected readonly cancelando = signal(false);
 
   constructor() {
     this.servicioPedidos.cargar();
@@ -50,17 +48,5 @@ export class PaginaMisPedidos {
   /** Posición del estado actual del pedido dentro del flujo (0 = pendiente). */
   protected indicePasoActual(pedido: Pedido): number {
     return FLUJO_PEDIDO.indexOf(pedido.estado);
-  }
-
-  protected cancelarPedido(pedido: Pedido): void {
-    this.cancelando.set(true);
-    this.errorCancelacion.set(null);
-    this.servicioPedidos.cancelar(pedido.id).subscribe({
-      next: () => this.cancelando.set(false),
-      error: (errorCancelando: Error) => {
-        this.errorCancelacion.set(errorCancelando.message);
-        this.cancelando.set(false);
-      },
-    });
   }
 }

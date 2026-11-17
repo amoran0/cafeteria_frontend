@@ -57,12 +57,9 @@
     </div>
 
     @if (pedidoActivo.estado === 'pendiente') {
-      @if (errorCancelacion(); as mensajeErrorCancelacion) {
-        <app-aviso tono="peligro" titulo="No se ha podido cancelar">{{ mensajeErrorCancelacion }}</app-aviso>
-      }
-      <button type="button" class="boton boton--cancelar" (click)="cancelarPedido(pedidoActivo)" [disabled]="cancelando()">
-        {{ cancelando() ? 'Cancelando…' : 'Cancelar pedido' }}
-      </button>
+      <app-aviso tono="informacion" titulo="¿Necesitas cancelar el pedido?">
+        Pídeselo al personal de barra antes de que empiece a prepararlo.
+      </app-aviso>
     } @else {
       <app-aviso tono="advertencia" titulo="Este pedido ya no se puede cancelar">
         La preparación ha comenzado. Si necesitas ayuda, consulta al personal de barra.
