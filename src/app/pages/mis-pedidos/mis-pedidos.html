@@ -69,8 +69,13 @@
 }
 
 <h2 class="solo-lector-pantalla">Historial</h2>
+@if (errorHistorial(); as mensajeErrorHistorial) {
+  <app-aviso tono="peligro" titulo="No se ha podido cargar el historial">{{ mensajeErrorHistorial }}</app-aviso>
+} @else if (cargandoHistorial() && !resultadoHistorial()) {
+  <p class="atenuado">Cargando el historial…</p>
+}
 <ul class="historial">
-  @for (pedidoAnterior of servicioPedidos.historial(); track pedidoAnterior.id) {
+  @for (pedidoAnterior of historial(); track pedidoAnterior.id) {
     <li class="tarjeta pila">
       <div class="fila fila--separada">
         <strong>#{{ pedidoAnterior.codigo }} · {{ pedidoAnterior.turno }}</strong>
@@ -81,8 +86,15 @@
       <strong class="t-titulo-3">{{ pedidoAnterior.total | euro }}</strong>
     </li>
   } @empty {
-    @if (!servicioPedidos.pedidoActivo()) {
+    @if (!servicioPedidos.pedidoActivo() && resultadoHistorial()) {
       <li class="tarjeta">Todavía no has hecho ningún pedido. <a routerLink="/carta">Ver la carta</a></li>
     }
   }
 </ul>
+@if (resultadoHistorial(); as paginaHistorialActual) {
+  <app-paginador
+    [paginaActual]="paginaHistorialActual.number"
+    [totalPaginas]="paginaHistorialActual.totalPages"
+    (cambiarPagina)="irAPaginaHistorial($event)"
+  />
+}
