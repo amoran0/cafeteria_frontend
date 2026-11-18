@@ -1,54 +1,73 @@
-/* ==========================================================================
-   The Coffee Room — estilos globales
-   Tokens extraídos del mockup de Figma (colores, radios, sombras y escala tipográfica).
-   ========================================================================== */
 
 :root {
-  /* Color */
-  --color-texto: #2e211b;
-  --color-texto-atenuado: #76665d;
-  --color-fondo-pagina: #f4eee5;
-  --color-superficie: #fffcf7;
-  --color-borde: #d8c9ba;
-  --color-arena: #ede0d0;
-  --color-acento: #e8d1a7;
-  --color-primario: #743014;
-  --color-primario-al-pasar: #5f2610;
-  --color-primario-claro: #a05232;
-  --color-primario-claro-al-pasar: #874126;
-  /* rgba(60, 55, 67, .9) sobre el fondo de página, como en el mockup */
-  --color-barra-lateral: #4e4953;
-  --color-barra-lateral-atenuado: #bfaea4;
-  --color-barra-lateral-suave: #d4c5bb;
-  --color-pie: #2e211b;
-  --color-pie-borde: #4a3a31;
-  --color-pie-atenuado: #c9b8a6;
+  /* Color: base */
+  --color-texto: #2a1f1a; /* tinta espresso */
+  --color-texto-atenuado: #74675e;
+  --color-fondo-pagina: #f3f0ea; /* cal */
+  --color-superficie: #fffefb;
+  --color-borde: #e2dacf;
+  --color-borde-fuerte: #cdc2b4;
+  --color-arena: #ebe3d7;
+  --color-acento: #e8d1a7; /* crema: el color del logo */
+  --color-primario: #6b2c12; /* tueste */
+  --color-primario-al-pasar: #56230d;
+  --color-primario-claro: #9a5534;
+  --color-primario-claro-al-pasar: #824427;
 
-  --color-exito: #2f6b52;
-  --color-exito-fondo: #dceadf;
-  --color-informacion: #356c75;
-  --color-informacion-fondo: #dceaec;
-  --color-peligro: #a43d36;
-  --color-peligro-fondo: #f5dad5;
-  --color-advertencia: #9b650e;
-  --color-advertencia-fondo: #f7e8c7;
-  --color-neutro: #4b2e24;
+  /* barra lateral y pie */
+  --color-barra-lateral: #2b201b;
+  --color-barra-lateral-atenuado: #a69485;
+  --color-barra-lateral-suave: #d3c3b4;
+  --color-pie: #2b201b;
+  --color-pie-borde: #3d2f28;
+  --color-pie-atenuado: #b8a798;
 
-  --color-deshabilitado-fondo: #eae3da;
-  --color-deshabilitado-texto: #9c9189;
+  /* Estados */
+  --color-exito: #2e6a4f;
+  --color-exito-fondo: #e0ede3;
+  --color-informacion: #2f6372; /* azulejo */
+  --color-informacion-fondo: #ddeaee;
+  --color-peligro: #a33a30;
+  --color-peligro-fondo: #f6e0db;
+  --color-advertencia: #8f5d0c;
+  --color-advertencia-fondo: #f6e9cc;
+  --color-neutro: #5a463c;
+
+  --color-deshabilitado-fondo: #ebe6df;
+  --color-deshabilitado-texto: #a1968d;
 
   /* Tipografía */
+  /* Fraunces se usa SOLO en el logo; el resto de la web usa DM Sans (la fuente de la web original). */
   --fuente-serif: 'Fraunces', Georgia, serif;
   --fuente-sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  /* Forma */
+  /* Forma: cada nivel de jerarquía tiene su propio radio */
   --radio-pildora: 999px;
-  --radio-tarjeta: 9px;
-  --radio-boton: 8px;
-  --radio-campo: 6px;
-  --sombra-tarjeta: 0 6px 9px rgba(57, 37, 27, 0.09);
+  --radio-tarjeta: 16px;
+  --radio-boton: 12px;
+  --radio-campo: 10px;
+  --sombra-tarjeta:
+    0 1px 2px rgba(43, 32, 27, 0.05),
+    0 10px 28px -16px rgba(43, 32, 27, 0.22);
+  --sombra-flotante:
+    0 2px 4px rgba(43, 32, 27, 0.06),
+    0 18px 40px -12px rgba(43, 32, 27, 0.28);
+  --anillo-foco: 0 0 0 3px rgba(107, 44, 18, 0.14);
 
-  --ancho-barra-lateral: 232px;
+  /* Movimiento */
+  --curva-salida: cubic-bezier(0.23, 1, 0.32, 1);
+  --curva-cajon: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --ancho-barra-lateral: 248px;
+  --ancho-contenido: 1240px;
+
+  color-scheme: light;
+
+  /* Bootstrap usa nuestra paleta y nuestras fuentes. */
+  --bs-body-font-family: var(--fuente-sans);
+  --bs-body-color: var(--color-texto);
+  --bs-body-bg: var(--color-fondo-pagina);
+  --bs-border-color: var(--color-borde);
 }
 
 *,
@@ -66,7 +85,7 @@ body {
 body {
   background: var(--color-fondo-pagina);
   color: var(--color-texto);
-  font: 400 13px/1.4 var(--fuente-sans);
+  font: 400 14px/1.5 var(--fuente-sans);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -75,6 +94,16 @@ h2,
 h3,
 p {
   margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 a {
@@ -94,58 +123,65 @@ textarea {
   color: inherit;
 }
 
+::selection {
+  background: var(--color-acento);
+  color: var(--color-texto);
+}
+
 :focus-visible {
   outline: 2px solid var(--color-primario);
   outline-offset: 2px;
 }
 
-/* ---------- Escala tipográfica (equivale a los estilos de texto de Figma) ---------- */
+/* ---------- Escala tipográfica ---------- */
 .t-titular {
-  font: 600 36px/1.2 var(--fuente-serif);
-  letter-spacing: -0.01em;
+  font: 800 40px/1.08 var(--fuente-sans);
+  letter-spacing: -0.02em;
 }
 .t-titulo-1 {
-  font: 600 30px/1.2 var(--fuente-serif);
-  letter-spacing: -0.005em;
+  font: 800 32px/1.12 var(--fuente-sans);
+  letter-spacing: -0.015em;
 }
 .t-titulo-2 {
-  font: 600 26px/1.2 var(--fuente-serif);
-  letter-spacing: -0.005em;
+  font: 800 28px/1.15 var(--fuente-sans);
+  letter-spacing: -0.01em;
 }
 .t-titulo-3 {
-  font: 600 20px/1.25 var(--fuente-serif);
+  font: 800 21px/1.25 var(--fuente-sans);
+  letter-spacing: -0.005em;
 }
 .t-titulo {
-  font: 700 18px/1.3 var(--fuente-sans);
+  font: 700 17px/1.3 var(--fuente-sans);
+  letter-spacing: -0.005em;
 }
 .t-titulo-pequeno {
-  font: 800 15px/1.3 var(--fuente-sans);
+  font: 700 15px/1.3 var(--fuente-sans);
 }
 .t-cuerpo-grande {
-  font: 500 16px/1.4 var(--fuente-sans);
+  font: 500 16px/1.5 var(--fuente-sans);
 }
 .t-cuerpo {
-  font: 400 13px/1.4 var(--fuente-sans);
+  font: 400 14px/1.5 var(--fuente-sans);
 }
 .t-pequeno {
-  font: 400 12px/1.4 var(--fuente-sans);
+  font: 400 13px/1.45 var(--fuente-sans);
 }
 .t-leyenda {
-  font: 400 11px/1.35 var(--fuente-sans);
+  font: 400 12px/1.4 var(--fuente-sans);
 }
+
 .t-etiqueta {
-  font: 800 11px/1.3 var(--fuente-sans);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font: 600 13px/1.3 var(--fuente-sans);
   color: var(--color-texto-atenuado);
 }
 .atenuado {
   color: var(--color-texto-atenuado);
 }
 .precio {
-  font-weight: 800;
+  font-weight: 700;
   color: var(--color-primario);
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 .tabular {
   font-variant-numeric: tabular-nums;
@@ -157,17 +193,17 @@ textarea {
   border: 1px solid var(--color-borde);
   border-radius: var(--radio-tarjeta);
   box-shadow: var(--sombra-tarjeta);
-  padding: 20px;
+  padding: 22px;
 }
 .tarjeta--amplia {
-  padding: 22px;
+  padding: 26px;
 }
 .tarjeta__cabecera {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 .separador {
   height: 1px;
@@ -199,22 +235,30 @@ textarea {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  height: 42px;
-  padding: 0 16px;
+  height: 44px;
+  padding: 0 18px;
   border-radius: var(--radio-boton);
   border: 1px solid transparent;
-  font: 700 13px/1 var(--fuente-sans);
+  font: 700 14px/1 var(--fuente-sans);
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
   transition:
-    background-color 0.15s,
-    border-color 0.15s,
-    color 0.15s;
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.16s var(--curva-salida);
+}
+.boton:active:not(:disabled):not([aria-disabled='true']) {
+  transform: scale(0.97);
 }
 .boton--primario {
   background: var(--color-primario);
   color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 6px 14px -8px rgba(107, 44, 18, 0.55);
 }
 .boton--primario:hover:not(:disabled) {
   background: var(--color-primario-al-pasar);
@@ -247,38 +291,54 @@ textarea {
   background: var(--color-arena);
 }
 .boton--pequeno {
-  height: 34px;
+  height: 36px;
   padding: 0 14px;
+  font-size: 13px;
 }
 .boton:disabled,
 .boton[aria-disabled='true'] {
   background: var(--color-deshabilitado-fondo);
   border-color: transparent;
   color: var(--color-deshabilitado-texto);
+  box-shadow: none;
   cursor: not-allowed;
 }
 
-/* ---------- Chips de filtro ---------- */
+/* ---------- Botones de filtro ---------- */
+/* Píldoras: la opción activa  */
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  height: 42px;
-  padding: 0 16px;
-  border-radius: var(--radio-boton);
+  justify-content: center;
+  gap: 7px;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: var(--radio-pildora);
   border: 1px solid var(--color-borde);
   background: var(--color-superficie);
-  font: 700 13px/1 var(--fuente-sans);
+  font: 600 14px/1 var(--fuente-sans);
   cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.16s var(--curva-salida);
+}
+.chip:hover:not(:disabled):not(.esta-activo) {
+  border-color: var(--color-texto-atenuado);
+}
+.chip:active:not(:disabled) {
+  transform: scale(0.96);
 }
 .chip.esta-activo {
-  background: var(--color-acento);
-  border-color: var(--color-acento);
-  font-weight: 500;
+  background: var(--color-barra-lateral);
+  border-color: var(--color-barra-lateral);
+  color: var(--color-acento);
+  font-weight: 700;
 }
 .chip__punto {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: currentColor;
 }
@@ -293,12 +353,19 @@ textarea {
 .entrada,
 .selector {
   width: 100%;
-  height: 42px;
+  height: 44px;
   padding: 0 14px;
   border: 1px solid var(--color-borde);
   border-radius: var(--radio-campo);
   background: var(--color-superficie);
-  font: 400 13px var(--fuente-sans);
+  font: 400 14px var(--fuente-sans);
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+.entrada:hover:not(:focus),
+.selector:hover:not(:focus) {
+  border-color: var(--color-borde-fuerte);
 }
 .entrada::placeholder,
 .selector.sin-seleccion {
@@ -311,20 +378,23 @@ textarea {
 .selector:focus {
   outline: none;
   border-color: var(--color-primario);
-  box-shadow: 0 0 0 3px rgba(116, 48, 20, 0.12);
+  box-shadow: var(--anillo-foco);
 }
 .entrada.es-invalido {
   border-color: var(--color-peligro);
 }
+.entrada.es-invalido:focus {
+  box-shadow: 0 0 0 3px rgba(163, 58, 48, 0.14);
+}
 .selector {
   appearance: none;
   padding-right: 36px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232e211b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232a1f1a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
   cursor: pointer;
 }
-/* Lista desplegable con el estilo de la página (navegadores sin soporte muestran la nativa). */
+/* Lista desplegable con el estilo de la página  */
 @supports (appearance: base-select) {
   .selector,
   .selector::picker(select) {
@@ -338,34 +408,36 @@ textarea {
     display: none;
   }
   .selector::picker(select) {
-    margin-top: 4px;
+    margin-top: 6px;
     padding: 6px;
     border: 1px solid var(--color-borde);
-    border-radius: var(--radio-tarjeta);
+    border-radius: var(--radio-campo);
     background: var(--color-superficie);
-    box-shadow: var(--sombra-tarjeta);
+    box-shadow: var(--sombra-flotante);
   }
   .selector option {
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 9px 10px;
-    border-radius: var(--radio-campo);
+    border-radius: 7px;
     color: var(--color-texto);
     cursor: pointer;
   }
   .selector option::checkmark {
     order: 1;
     margin-left: auto;
-    color: var(--color-primario);
+    color: var(--color-acento);
   }
   .selector option:hover,
   .selector option:focus-visible {
     background: var(--color-arena);
     outline: none;
   }
-  .selector option:checked {
-    background: var(--color-acento);
+  .selector option:checked,
+  .selector option:checked:hover {
+    background: var(--color-barra-lateral);
+    color: var(--color-acento);
     font-weight: 700;
   }
 }
@@ -381,31 +453,36 @@ textarea {
   pointer-events: none;
 }
 .entrada-con-icono > .entrada {
-  padding-left: 38px;
+  padding-left: 40px;
 }
 .rejilla-formulario {
   display: grid;
-  gap: 14px;
+  gap: 16px;
 }
 .columnas-2 {
   grid-template-columns: 1fr 1fr;
 }
 .error-campo {
   color: var(--color-peligro);
-  font-size: 12px;
+  font-size: 13px;
 }
 
-/* ---------- Badges ---------- */
+/* ---------- Insignias de estado ---------- */
+/* Texto en negrita con el color del estado y un punto delante, sin fondo. */
 .insignia {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 0;
-  background: transparent;
-  font: 800 11px/1 var(--fuente-sans);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  gap: 7px;
+  font: 700 14px/1.2 var(--fuente-sans);
   white-space: nowrap;
+}
+.insignia::before {
+  content: '';
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: currentColor;
 }
 .insignia--exito {
   color: var(--color-exito);
@@ -444,12 +521,56 @@ textarea {
   border: 0;
   padding: 0;
   cursor: pointer;
-  font: 700 13px var(--fuente-sans);
+  font: 700 14px var(--fuente-sans);
   color: var(--color-texto);
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  text-underline-offset: 3px;
 }
 .boton-enlace:hover {
   text-decoration: underline;
+}
+
+/* Enlace "Saltar al contenido":  */
+.saltar-contenido {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: var(--radio-boton);
+  background: var(--color-acento);
+  color: var(--color-texto);
+  font: 700 14px var(--fuente-sans);
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform 0.2s var(--curva-salida);
+}
+.saltar-contenido:focus-visible {
+  transform: none;
+}
+
+/* Entrada de cada página: un fundido corto de opacidad. */
+@keyframes entrada-pagina {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+  }
+}
+
+/* Cada página enrutada entra con el fundido corto definido arriba.
+   La carta no, porque ya tiene su propia animación en el hero y se pisarían. */
+.estructura__principal > :not(router-outlet):not(app-pagina-carta) {
+  display: block;
+  animation: entrada-pagina 0.25s ease-out;
 }
