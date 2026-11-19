@@ -57,7 +57,7 @@
 }
 @media (max-width: 1000px) {
   .detalle {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .detalle__foto {
     min-height: 0;

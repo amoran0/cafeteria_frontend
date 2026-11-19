@@ -1,6 +1,7 @@
 <app-cabecera-pagina titulo="Crear cuenta" subtitulo="Regístrate para hacer pedidos y seguir tu turno." />
 
-<form class="tarjeta tarjeta--amplia pila registro" [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
+<!-- Formulario centrado en la página (mx-auto de Bootstrap). -->
+<form class="tarjeta tarjeta--amplia pila registro mx-auto" [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
   <h2 class="t-titulo-3">Tus datos</h2>
 
   <label class="campo">

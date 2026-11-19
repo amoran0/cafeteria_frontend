@@ -37,9 +37,39 @@
 }
 @media (max-width: 1100px) {
   .distribucion {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 .tarjeta > app-aviso:not(:last-child) {
   margin-bottom: 14px;
+}
+.tabla tr + tr td {
+  border-top: 1px solid var(--color-borde);
+}
+
+/* Móvil: cada producto de la tabla se muestra como un bloque (nombre arriba, el resto debajo). */
+@media (max-width: 600px) {
+  .tabla,
+  .tabla tbody {
+    display: block;
+  }
+  .tabla tr {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 16px;
+    padding: 14px 0;
+  }
+  .tabla tr + tr {
+    border-top: 1px solid var(--color-borde);
+  }
+  .tabla tr + tr td {
+    border-top: 0;
+  }
+  .tabla td {
+    padding: 0;
+  }
+  .tabla td:first-child {
+    flex: 1 0 100%;
+  }
 }

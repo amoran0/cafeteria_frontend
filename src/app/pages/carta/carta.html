@@ -1,9 +1,35 @@
-<app-cabecera-pagina titulo="Carta">
-  <a class="boton boton--primario" [routerLink]="autenticacion.rol() === 'cliente' ? '/pedido' : '/acceder'">
-    <app-icono nombre="bolsa-compra" />
-    Ver mi pedido · {{ servicioCarrito.unidades() }}
-  </a>
-</app-cabecera-pagina>
+<!-- Hero: rejilla de Bootstrap (texto 7 columnas, foto 5 columnas; en móvil se apilan). -->
+<section class="hero row align-items-center g-4 g-lg-5" aria-labelledby="hero-titulo">
+  <div class="col-lg-7 d-flex flex-column align-items-start gap-3">
+    <h1 id="hero-titulo" class="hero__titulo">Café de especialidad, preparado al momento.</h1>
+    <p class="hero__entradilla">
+      Elige en la carta, haz tu pedido y recógelo en barra con tu número de turno.
+    </p>
+    <div class="d-flex flex-wrap align-items-center gap-2 mt-1">
+      <a class="boton boton--primario" [routerLink]="autenticacion.rol() === 'cliente' ? '/pedido' : '/acceder'">
+        <app-icono nombre="bolsa-compra" />
+        Realizar pedido
+      </a>
+      <a class="boton boton--discreto" routerLink="/como-pedir">Cómo pedir</a>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="hero__imagen">
+    <img
+      src="img/roll-canela-detalle.jpg"
+      alt="Roll de canela glaseado sobre un plato de cerámica, junto a la ventana del local"
+      width="768"
+      height="1376"
+      fetchpriority="high"
+      decoding="async"
+    />
+    </div>
+  </div>
+</section>
+
+<div class="seccion-carta">
+  <h2 class="t-titulo-1">Carta</h2>
+</div>
 
 <section class="controles" aria-label="Filtros de la carta">
   <div class="controles__fila">
@@ -36,10 +62,13 @@
         textoIndicativo="Ej.: Gluten, Leche, Sésamo…"
       />
     </div>
-    <button type="button" class="boton boton--secundario" (click)="quitarFiltros()">
-      <app-icono nombre="cerrar" [tamano]="15" />
-      Borrar filtros
-    </button>
+    <!-- Solo aparece si hay algún filtro aplicado. -->
+    @if (hayFiltrosActivos()) {
+      <button type="button" class="boton boton--secundario" (click)="quitarFiltros()">
+        <app-icono nombre="cerrar" [tamano]="15" />
+        Borrar filtros
+      </button>
+    }
   </div>
 </section>
 
@@ -57,7 +86,12 @@
 } @else if (cargando() && !resultado()) {
   <p class="atenuado">Cargando la carta…</p>
 } @else if (resultado()?.content?.length) {
-  <ul class="rejilla" [class.esta-cargando]="cargando()" [attr.aria-busy]="cargando()">
+  <ul
+    class="rejilla"
+    [class.esta-cargando]="cargando()"
+    [attr.aria-busy]="cargando()"
+    [style.min-height.px]="altoMinimoRejilla() || null"
+  >
     @for (producto of resultado()!.content; track producto.id) {
       <li>
         <app-tarjeta-producto [producto]="producto" [nombreCategoria]="servicioProductos.nombreCategoria(producto.categoriaId)" />

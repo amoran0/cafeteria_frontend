@@ -1,6 +1,7 @@
 <app-cabecera-pagina titulo="Acceder" subtitulo="Inicia sesión para hacer pedidos o gestionar la cafetería." />
 
-<div class="acceso">
+<!-- Formulario centrado en la página (mx-auto de Bootstrap). -->
+<div class="acceso mx-auto d-flex flex-column gap-4">
   <form class="tarjeta tarjeta--amplia pila" [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
     <h2 class="t-titulo-3">Iniciar sesión</h2>
 
@@ -32,6 +33,7 @@
     <p class="t-pequeno atenuado">¿No tienes cuenta? <a routerLink="/registro">Crea una</a></p>
   </form>
 
+  <!-- ACCESOS DE DEMOSTRACIÓN (datos simulados): borrar este bloque @if cuando ya no hagan falta. -->
   @if (usuariosDemostracion.length) {
     <aside class="tarjeta tarjeta--amplia pila">
       <h2 class="t-titulo-3">Accesos de demostración</h2>

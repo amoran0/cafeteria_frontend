@@ -147,20 +147,14 @@ export class PaginaCupones {
     }
     const valores = this.formulario.getRawValue();
     const codigo = valores.codigo.trim().toUpperCase();
-    const textoDestinatario =
-      valores.destinatario === 'personal' ? valores.email : 'todos los productos';
-    const textoDescuento =
-      valores.tipo === 'porcentaje' ? valores.valor + ' %' : formatearEuros(valores.valor);
-    const textoMinimo = valores.minimoCompra
-      ? ' · mín. ' + formatearEuros(valores.minimoCompra)
-      : '';
     const cuponEditado = this.cuponEnEdicion();
     const cupon: Cupon = {
       id: cuponEditado?.id ?? '',
       codigo,
       tipo: valores.tipo,
       valor: valores.valor,
-      descripcion: `${textoDescuento} · ${textoDestinatario}${textoMinimo}`,
+      // La descripción no se envía: la calcula mapearCupon() con la respuesta de la API.
+      descripcion: '',
       desde: valores.desde,
       hasta: valores.hasta || null,
       usos: cuponEditado?.usos ?? 0,

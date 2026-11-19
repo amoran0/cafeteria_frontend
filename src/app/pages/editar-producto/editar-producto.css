@@ -25,7 +25,7 @@
 }
 .alergenos__caja.esta-abierto {
   border-color: var(--color-primario);
-  box-shadow: 0 0 0 3px rgba(116, 48, 20, 0.12);
+  box-shadow: var(--anillo-foco);
 }
 .alergenos__fichas {
   flex: 1;
@@ -111,6 +111,6 @@
   .columnas-3,
   .columnas-2,
   .retirar__cuerpo {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }

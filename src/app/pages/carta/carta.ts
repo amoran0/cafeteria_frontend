@@ -12,7 +12,6 @@ import { catchError, debounceTime, map, of, switchMap, tap } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { GrupoFiltros, OpcionFiltro } from '../../components/grupo-filtros/grupo-filtros';
 import { Icono } from '../../components/icono/icono';
-import { CabeceraPagina } from '../../components/cabecera-pagina/cabecera-pagina';
 import { TarjetaProducto } from '../../components/tarjeta-producto/tarjeta-producto';
 import { CampoBusqueda } from '../../components/campo-busqueda/campo-busqueda';
 import { SelectorMultiple } from '../../components/selector-multiple/selector-multiple';
@@ -28,10 +27,12 @@ import { ServicioProductos } from '../../services/servicio-productos';
 /** Productos por página en la carta. */
 const PRODUCTOS_POR_PAGINA = 6;
 
+/** Precio máximo que equivale a "sin filtro de precio" (la opción más alta del selector). */
+const PRECIO_MAXIMO_SIN_FILTRO = 15;
+
 @Component({
   selector: 'app-pagina-carta',
   imports: [
-    CabeceraPagina,
     TarjetaProducto,
     GrupoFiltros,
     CampoBusqueda,
@@ -69,7 +70,17 @@ export class PaginaCarta {
   protected readonly textoBusqueda = signal('');
   protected readonly tipoProducto = signal('todos');
   protected readonly estadoDisponibilidad = signal('todos');
-  protected readonly precioMaximo = signal(10);
+  protected readonly precioMaximo = signal(PRECIO_MAXIMO_SIN_FILTRO);
+
+  /** ¿Hay algún filtro distinto del estado inicial? Si no, el botón "Borrar filtros" no se muestra. */
+  protected readonly hayFiltrosActivos = computed(
+    () =>
+      this.textoBusqueda().trim() !== '' ||
+      this.tipoProducto() !== 'todos' ||
+      this.estadoDisponibilidad() !== 'todos' ||
+      this.precioMaximo() !== PRECIO_MAXIMO_SIN_FILTRO ||
+      this.alergenosExcluidos().length > 0,
+  );
   protected readonly alergenosExcluidos = signal<string[]>([]);
 
   /** Filtros actuales agrupados en un objeto: es lo que se envía a la API. */
@@ -86,12 +97,20 @@ export class PaginaCarta {
   protected readonly resultado = signal<PaginaResultados<Producto> | null>(null);
   protected readonly cargando = signal(true);
   protected readonly error = signal<string | null>(null);
+  /**
+   * Altura mínima de la rejilla al cambiar de página. Si la página nueva tiene menos productos,
+   * la web no se acorta y la vista no salta.
+   */
+  protected readonly altoMinimoRejilla = signal(0);
 
   constructor() {
-    // Al cambiar cualquier filtro se vuelve a la primera página.
+    // Al cambiar cualquier filtro se vuelve a la primera página (y la rejilla recupera su altura natural).
     effect(() => {
       this.filtros();
-      untracked(() => this.paginaActual.set(0));
+      untracked(() => {
+        this.paginaActual.set(0);
+        this.altoMinimoRejilla.set(0);
+      });
     });
 
     // Cada cambio de filtros o de página lanza una petición nueva. `debounceTime` evita una petición
@@ -128,15 +147,17 @@ export class PaginaCarta {
   }
 
   protected irAPagina(pagina: number): void {
+    // La vista no se desplaza: se mantiene la altura actual de la rejilla y solo cambian los productos.
+    const rejilla = document.querySelector('.rejilla');
+    this.altoMinimoRejilla.set(Math.max(this.altoMinimoRejilla(), rejilla?.clientHeight ?? 0));
     this.paginaActual.set(pagina);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   protected quitarFiltros(): void {
     this.textoBusqueda.set('');
     this.tipoProducto.set('todos');
     this.estadoDisponibilidad.set('todos');
-    this.precioMaximo.set(15);
+    this.precioMaximo.set(PRECIO_MAXIMO_SIN_FILTRO);
     this.alergenosExcluidos.set([]);
   }
 }

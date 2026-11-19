@@ -37,7 +37,7 @@ const TITULO_Y_SUBTITULO_POR_SECCION: Record<Seccion, [titulo: string, subtitulo
       gap: 8px;
     }
     .paso__numero {
-      font: 600 30px var(--fuente-serif);
+      font: 800 30px var(--fuente-sans);
       color: var(--color-primario);
     }
     .indicadores {

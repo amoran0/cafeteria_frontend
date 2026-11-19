@@ -1,7 +1,82 @@
+/* ---------- Hero (la rejilla la pone Bootstrap: .row y .col-lg-*) ---------- */
+.hero {
+  margin-bottom: 56px;
+}
+.hero__titulo {
+  font: 800 clamp(38px, 4.6vw, 58px) / 1.05 var(--fuente-sans);
+  letter-spacing: -0.02em;
+}
+.hero__entradilla {
+  max-width: 42ch;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--color-texto-atenuado);
+}
+.hero__imagen {
+  aspect-ratio: 4 / 5;
+  max-height: 600px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--color-arena);
+  box-shadow: var(--sombra-flotante);
+}
+.hero__imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 64%;
+}
+
+/* Única animación de entrada de la carta: la foto se descubre de abajo arriba y el texto aparece
+   escalonado. Con "backwards" solo se aplica el estado inicial: al terminar no queda nada fijado. */
+.hero__imagen {
+  animation: hero-revelar 0.8s cubic-bezier(0.77, 0, 0.175, 1) backwards;
+}
+.hero__imagen img {
+  animation: hero-asentar 1.2s var(--curva-salida) backwards;
+}
+.hero__titulo,
+.hero__entradilla,
+.hero .gap-2 {
+  animation: hero-texto 0.5s var(--curva-salida) backwards;
+}
+.hero__entradilla {
+  animation-delay: 0.08s;
+}
+.hero .gap-2 {
+  animation-delay: 0.16s;
+}
+@keyframes hero-revelar {
+  from {
+    clip-path: inset(100% 0 0 0 round 24px);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 24px);
+  }
+}
+@keyframes hero-asentar {
+  from {
+    transform: scale(1.08);
+  }
+}
+@keyframes hero-texto {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* ---------- Carta ---------- */
+.seccion-carta {
+  padding-top: 28px;
+  margin-bottom: 20px;
+  border-top: 1px solid var(--color-borde);
+}
+
 .controles {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
 }
 .controles__fila {
   display: flex;
@@ -10,34 +85,64 @@
   flex-wrap: wrap;
 }
 .controles__precio {
-  width: 160px;
+  width: 170px;
 }
 .resumen {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin: 14px 0;
+  margin: 28px 0 18px;
 }
 .rejilla {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 8px 24px;
+  align-content: start;
 }
 .final {
   text-align: center;
-  padding: 24px 0 0;
+  padding: 20px 0 0;
 }
 .vacio {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 14px;
-  padding: 40px;
+  padding: 48px;
+  text-align: center;
 }
 .esta-cargando {
-  opacity: 0.6;
-  transition: opacity 0.15s;
+  opacity: 0.55;
+  transition: opacity 0.2s ease;
+}
+
+/* Tablet y móvil: la foto pasa a ser apaisada debajo del texto. */
+@media (max-width: 991.98px) {
+  .hero {
+    margin-bottom: 40px;
+  }
+  .hero__imagen {
+    aspect-ratio: 16 / 9;
+    border-radius: 18px;
+  }
+  @keyframes hero-revelar {
+    from {
+      clip-path: inset(100% 0 0 0 round 18px);
+    }
+    to {
+      clip-path: inset(0 0 0 0 round 18px);
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .controles__precio {
+    width: 100%;
+  }
+  .controles__fila > .boton {
+    width: 100%;
+  }
 }

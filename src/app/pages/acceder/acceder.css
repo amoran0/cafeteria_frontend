@@ -1,9 +1,9 @@
+/* Columna centrada con el formulario (y debajo, los accesos de demostración). */
 .acceso {
-  display: grid;
-  grid-template-columns: minmax(0, 420px) minmax(0, 380px);
-  gap: 20px;
-  align-items: start;
+  max-width: 440px;
 }
+
+/* ---- Accesos de demostración: se puede borrar junto con su bloque en el HTML ---- */
 .demo {
   display: flex;
   align-items: center;
@@ -23,8 +23,6 @@
 .demo:hover {
   border-color: var(--color-texto-atenuado);
 }
-@media (max-width: 900px) {
-  .acceso {
-    grid-template-columns: 1fr;
-  }
+.demo .insignia {
+  width: 84px;
 }

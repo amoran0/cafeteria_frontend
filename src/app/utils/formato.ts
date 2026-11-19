@@ -45,11 +45,6 @@ export function minutosDesde(iso: string, ahora = new Date()): number {
   return Math.max(0, Math.round((ahora.getTime() - new Date(iso).getTime()) / 60000));
 }
 
-/** "Café con Leche" → "cafe-con-leche" (sin tildes ni símbolos). */
-export function textoAIdentificador(texto: string): string {
-  return texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-');
-}
-
 /** "2 × Flat white · 1 × Croissant" */
 export function resumenLineas(lineas: { cantidad: number; nombre: string }[]): string {
   return lineas.map((linea) => `${linea.cantidad} × ${linea.nombre}`).join(' · ');

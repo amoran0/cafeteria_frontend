@@ -31,15 +31,16 @@ export function categoriasDelGrupo(grupo: GrupoCarta, idsCategorias: string[]): 
 
 /** Fotos de /public/img por id de producto. Sin entrada → la tarjeta muestra un fondo liso. */
 const IMAGEN_POR_PRODUCTO: Record<string, { imagen: string; imagenDetalle?: string }> = {
-  'f0eebc99-9c0b-4ef8-bb6d-6bb9bd380a02': { imagen: 'img/flat-white.jpg' }, // Café con Leche
-  'f0eebc99-9c0b-4ef8-bb6d-6bb9bd380a03': { imagen: 'img/cold-brew-naranja.jpg' }, // Iced Caramel Macchiato
-  'f0eebc99-9c0b-4ef8-bb6d-6bb9bd380a06': { imagen: 'img/tostada-aguacate.jpg' }, // Tostada de Aguacate y Huevo
-  'f0eebc99-9c0b-4ef8-bb6d-6bb9bd380a07': {
-    imagen: 'img/roll-canela.jpg',
-    imagenDetalle: 'img/roll-canela-detalle.jpg',
-  }, // Croissant de Mantequilla
-  'f0eebc99-9c0b-4ef8-bb6d-6bb9bd380a08': { imagen: 'img/bowl-granola.jpg' }, // Tarta de Zanahoria
-  'f0eebc99-9c0b-4ef8-bb6d-6bb9bd380a10': { imagen: 'img/fitzone-proteina.jpg' }, // Smoothie Antiox
+  'f0eebc99-9c0b-4ef8-bb6d-6bb9bd380a01': { imagen: 'img/espresso.jpg' }, // Café Espresso
+  'f0eebc99-9c0b-4ef8-bb6d-6bb9bd380a02': { imagen: 'img/cafe-con-leche.jpg' }, // Café con Leche
+  'f0eebc99-9c0b-4ef8-bb6d-6bb9bd380a03': { imagen: 'img/iced-caramel-macchiato.jpg' }, // Iced Caramel Macchiato
+  'f0eebc99-9c0b-4ef8-bb6d-6bb9bd380a04': { imagen: 'img/cappuccino.jpg' }, // Cappuccino Italiano
+  'f0eebc99-9c0b-4ef8-bb6d-6bb9bd380a05': { imagen: 'img/tostada-tomate.jpg' }, // Tostada con Tomate y Aceite
+  'f0eebc99-9c0b-4ef8-bb6d-6bb9bd380a06': { imagen: 'img/tostada-aguacate-huevo.jpg' }, // Tostada de Aguacate y Huevo
+  'f0eebc99-9c0b-4ef8-bb6d-6bb9bd380a07': { imagen: 'img/croissant.jpg' }, // Croissant de Mantequilla
+  'f0eebc99-9c0b-4ef8-bb6d-6bb9bd380a08': { imagen: 'img/carrot-cake.jpg' }, // Tarta de Zanahoria
+  'f0eebc99-9c0b-4ef8-bb6d-6bb9bd380a09': { imagen: 'img/zumo-naranja.jpg' }, // Zumo de Naranja Natural
+  'f0eebc99-9c0b-4ef8-bb6d-6bb9bd380a10': { imagen: 'img/smoothie-antiox.jpg' }, // Smoothie Antiox
 };
 
 export function imagenesDeProducto(idProducto: string): { imagen?: string; imagenDetalle?: string } {

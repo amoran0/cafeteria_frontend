@@ -1,6 +1,6 @@
 .indicadores {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
   margin-bottom: 18px;
 }
@@ -53,7 +53,7 @@
 }
 @media (max-width: 1100px) {
   .distribucion {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 .cupon__acciones {

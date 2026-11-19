@@ -32,7 +32,7 @@ export interface Producto {
   categoriaId: string;
   alergenos: Alergeno[];
   estado: EstadoProducto;
-  /** Ruta relativa a /public, p. ej. `img/flat-white.jpg`. No viene de la API (`utils/presentacion.ts`). */
+  /** Ruta relativa a /public, p. ej. `img/espresso.jpg`. No viene de la API (`utils/presentacion.ts`). */
   imagen?: string;
   /** Foto vertical opcional para la ficha de detalle (si no hay, se usa `imagen`). */
   imagenDetalle?: string;
