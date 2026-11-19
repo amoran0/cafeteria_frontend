@@ -71,6 +71,15 @@
   padding-top: 28px;
   margin-bottom: 20px;
   border-top: 1px solid var(--color-borde);
+  /* Hueco que se deja por encima al desplazarse hasta aquí al cambiar de página. */
+  scroll-margin-top: 16px;
+}
+
+/* En móvil se deja sitio para el botón fijo del menú (arriba a la izquierda). */
+@media (max-width: 900px) {
+  .seccion-carta {
+    scroll-margin-top: 72px;
+  }
 }
 
 .controles {
