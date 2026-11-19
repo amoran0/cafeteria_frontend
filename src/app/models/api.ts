@@ -80,11 +80,6 @@ export interface CategoriaApi {
   disponible: boolean;
 }
 
-/** Cuerpo de `PATCH /productos/{id}/disponibilidad` y `PATCH /categorias/{id}/disponibilidad`. */
-export interface DisponibilidadPeticionApi {
-  disponible: boolean;
-}
-
 // ─── Pedidos ────────────────────────────────────────────────────────────────
 
 export type EstadoPedidoApi = 'PENDIENTE' | 'EN_PREPARACION' | 'LISTO' | 'ENTREGADO' | 'CANCELADO';
@@ -120,10 +115,6 @@ export interface PedidoPeticionApi {
   lineas: { productoId: string; cantidad: number }[];
   codigoCupon?: string | null;
   dniSocio?: string | null;
-}
-
-export interface EstadoPedidoPeticionApi {
-  estado: EstadoPedidoApi;
 }
 
 // ─── Cupones ────────────────────────────────────────────────────────────────

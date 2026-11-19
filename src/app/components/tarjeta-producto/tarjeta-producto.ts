@@ -50,14 +50,13 @@ import { EtiquetaEstado } from '../etiqueta-estado/etiqueta-estado';
     .tarjeta-producto__informacion { display: flex; flex-direction: column; align-items: stretch; gap: 6px; padding: 16px 2px 28px; text-align: left; }
     /* Con nombres de dos líneas, el precio se alinea con la última línea. */
     .tarjeta-producto__titulo { display: flex; align-items: last baseline; justify-content: space-between; gap: 12px; }
-    .tarjeta-producto__titulo h3 { min-width: 0; text-underline-offset: 4px; }
+    .tarjeta-producto__titulo h3 { min-width: 0; }
     .tarjeta-producto__titulo .precio { font-size: 16px; }
     .tarjeta-producto__datos { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
     .esta-agotado h3 { color: var(--color-texto-atenuado); }
     .tarjeta-producto:focus-visible { outline-offset: 6px; border-radius: var(--radio-tarjeta); }
     @media (hover: hover) and (pointer: fine) {
       .tarjeta-producto:hover .tarjeta-producto__imagen img { transform: scale(1.04); }
-      .tarjeta-producto:hover h3 { text-decoration: underline; }
     }
   `,
 })

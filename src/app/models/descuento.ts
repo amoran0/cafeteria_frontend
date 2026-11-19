@@ -1,4 +1,3 @@
-import { Cupon } from './cupon';
 import { DescuentoAplicado, TipoDescuento } from './pedido';
 import { redondear } from '../utils/calculos';
 
@@ -88,14 +87,6 @@ export class DescuentoSocioFitZone extends DescuentoPorcentaje {
   override describir(): string {
     return `${super.describir()} · DNI ···${this.dni.slice(-4)}`;
   }
-}
-
-/** Crea el descuento adecuado según el tipo de cupón (fábrica polimórfica). */
-export function crearDescuentoDeCupon(cupon: Cupon): Descuento {
-  const origen = `Cupón ${cupon.codigo}`;
-  return cupon.tipo === 'porcentaje'
-    ? new DescuentoPorcentaje(origen, cupon.valor)
-    : new DescuentoImporteFijo(origen, cupon.valor);
 }
 
 /** De varios descuentos, devuelve el que más ahorra (cupón y socio no se suman). */

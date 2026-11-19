@@ -15,7 +15,6 @@ const TEXTO_Y_TONO_POR_ESTADO: Record<string, [string, TonoEtiqueta]> = {
   listo: ['Listo', 'exito'],
   entregado: ['Entregado', 'neutro'],
   cancelado: ['Cancelado', 'neutro'],
-  pagado: ['Pagado', 'exito'],
   // Cupón
   personal: ['Personal', 'informacion'],
   caducado: ['Caducado', 'peligro'],
