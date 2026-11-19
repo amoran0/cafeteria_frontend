@@ -4,7 +4,7 @@ import { entorno } from '../../entornos/entorno';
 import { ErrorSimulado, atenderPeticion } from './servidor-simulado';
 
 /** Latencia simulada de red, para ver los estados de carga. */
-const LATENCIA_MS = 150;
+const LATENCIA_MS = 0;
 
 /**
  * Responde las peticiones a la API con el servidor simulado, sin salir del navegador.

@@ -3,8 +3,8 @@ import { guardaSoloInvitados } from './guards/guarda-sesion';
 import { guardaPorRol } from './guards/guarda-rol';
 import { EstructuraAplicacion } from './components/estructura-aplicacion/estructura-aplicacion';
 
-/** Título de la pestaña del navegador: «Carta · The Coffee Room». */
-const titulo = (texto: string) => `${texto} · The Coffee Room`;
+/** Título de la pestaña del navegador: siempre el nombre de la cafetería, sea cual sea la página. */
+const titulo = (_texto: string) => 'The Coffee Room';
 
 /** Página informativa sencilla; `seccion` elige su contenido. */
 const informacionSeccion = (seccion: string) => ({

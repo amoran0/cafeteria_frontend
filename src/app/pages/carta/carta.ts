@@ -3,9 +3,11 @@ import {
   Component,
   computed,
   effect,
+  ElementRef,
   inject,
   signal,
   untracked,
+  viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { catchError, debounceTime, map, of, switchMap, tap } from 'rxjs';
@@ -102,6 +104,8 @@ export class PaginaCarta {
    * la web no se acorta y la vista no salta.
    */
   protected readonly altoMinimoRejilla = signal(0);
+  /** Inicio de la sección «Carta»: al cambiar de página se desplaza la vista hasta aquí. */
+  private readonly inicioCarta = viewChild.required<ElementRef<HTMLElement>>('inicioCarta');
 
   constructor() {
     // Al cambiar cualquier filtro se vuelve a la primera página (y la rejilla recupera su altura natural).
@@ -147,10 +151,12 @@ export class PaginaCarta {
   }
 
   protected irAPagina(pagina: number): void {
-    // La vista no se desplaza: se mantiene la altura actual de la rejilla y solo cambian los productos.
+    // Se mantiene la altura actual de la rejilla para que la página no se acorte mientras llegan los productos.
     const rejilla = document.querySelector('.rejilla');
     this.altoMinimoRejilla.set(Math.max(this.altoMinimoRejilla(), rejilla?.clientHeight ?? 0));
     this.paginaActual.set(pagina);
+    // Sube hasta el título «Carta» para que se vean los filtros y el principio de la página nueva.
+    this.inicioCarta().nativeElement.scrollIntoView({ block: 'start' });
   }
 
   protected quitarFiltros(): void {

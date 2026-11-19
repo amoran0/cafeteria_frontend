@@ -62,12 +62,6 @@
   --ancho-contenido: 1240px;
 
   color-scheme: light;
-
-  /* Bootstrap usa nuestra paleta y nuestras fuentes. */
-  --bs-body-font-family: var(--fuente-sans);
-  --bs-body-color: var(--color-texto);
-  --bs-body-bg: var(--color-fondo-pagina);
-  --bs-border-color: var(--color-borde);
 }
 
 *,
@@ -82,11 +76,21 @@ body {
   min-height: 100%;
 }
 
+/* Desplazamiento suave (p. ej. el enlace «Saltar al contenido»), salvo si el usuario pide menos movimiento. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   background: var(--color-fondo-pagina);
   color: var(--color-texto);
   font: 400 14px/1.5 var(--fuente-sans);
   -webkit-font-smoothing: antialiased;
+  /* Evita que el móvil agrande el texto al girar y quita el recuadro gris al tocar. */
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 h1,
@@ -119,6 +123,7 @@ button,
 input,
 select,
 textarea {
+  margin: 0;
   font: inherit;
   color: inherit;
 }
