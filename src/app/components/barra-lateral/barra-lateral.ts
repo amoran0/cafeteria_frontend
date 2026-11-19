@@ -12,7 +12,7 @@ interface ConfiguracionRol {
   menu: { texto: string; ruta: string }[];
 }
 
-/** Etiqueta, icono y menú de cada uno de los 4 roles. */
+/** Etiqueta, icono y menú de cada uno de los 3 roles. */
 const CONFIGURACION_POR_ROL: Record<Rol, ConfiguracionRol> = {
   publico: {
     etiqueta: 'Público',

@@ -16,7 +16,7 @@ const ICONO_POR_TONO: Record<TonoAviso, NombreIcono> = {
   advertencia: 'circulo-alerta',
 };
 
-/** Aviso con icono, título y texto (proyectado). */
+/** Aviso con icono, título y texto  */
 @Component({
   selector: 'app-aviso',
   imports: [Icono],

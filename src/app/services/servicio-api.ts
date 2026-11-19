@@ -105,11 +105,6 @@ export function traducirError(errorHttp: unknown): ErrorApi {
   return new ErrorApi(mensaje, errorHttp.status, errores);
 }
 
-/** Texto para el usuario de cualquier error HTTP. */
-export function mensajeDeError(errorHttp: unknown): string {
-  return traducirError(errorHttp).message;
-}
-
 function mensajePorEstado(estado: number): string {
   if (estado === 0) return 'No se puede conectar con el servidor. Comprueba tu conexión.';
   if (estado === 401) return 'Tu sesión ha caducado. Vuelve a iniciar sesión.';

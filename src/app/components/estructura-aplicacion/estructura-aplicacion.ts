@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal, untracked } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { PiePagina } from '../pie-pagina/pie-pagina';
 import { Icono } from '../icono/icono';
 import { BarraLateral } from '../barra-lateral/barra-lateral';
+import { ServicioAutenticacion } from '../../services/servicio-autenticacion';
 
 /**
  * Estructura común de todas las vistas: barra lateral a toda la altura + contenido con su pie debajo.
@@ -16,6 +17,7 @@ import { BarraLateral } from '../barra-lateral/barra-lateral';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '(document:keydown.escape)': 'menuAbierto.set(false)' },
   template: `
+    <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
     <div class="estructura" [class.esta-abierto]="menuAbierto()">
       <button
         type="button"
@@ -50,8 +52,15 @@ import { BarraLateral } from '../barra-lateral/barra-lateral';
     }
     .estructura__principal {
       flex: 1 0 auto;
-      padding: 34px 40px 36px;
+      width: 100%;
+      max-width: calc(var(--ancho-contenido) + 2 * 48px);
+      margin-inline: auto;
+      padding: 44px 48px 64px;
       min-width: 0;
+      scroll-margin-top: 16px;
+    }
+    .estructura__principal:focus {
+      outline: none;
     }
     .estructura__desplegable,
     .estructura__fondo {
@@ -72,17 +81,18 @@ import { BarraLateral } from '../barra-lateral/barra-lateral';
         z-index: 20;
         transform: translateX(-100%);
         visibility: hidden;
-        transition: transform 0.25s ease, visibility 0.25s;
+        transition: transform 0.4s var(--curva-cajon), visibility 0.4s;
       }
       .estructura__fondo {
         display: block;
         position: fixed;
         inset: 0;
         z-index: 10;
-        background: rgba(30, 24, 30, 0.45);
+        background: rgba(43, 32, 27, 0.5);
+        backdrop-filter: blur(2px);
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.25s;
+        transition: opacity 0.3s var(--curva-salida);
       }
       .estructura__desplegable {
         display: grid;
@@ -96,10 +106,13 @@ import { BarraLateral } from '../barra-lateral/barra-lateral';
         border: 0;
         border-radius: 50%;
         background: var(--color-barra-lateral);
-        color: #fff;
-        box-shadow: var(--sombra-tarjeta);
+        color: var(--color-acento);
+        box-shadow: var(--sombra-flotante);
         cursor: pointer;
-        transition: left 0.25s ease;
+        transition: left 0.4s var(--curva-cajon), transform 0.16s var(--curva-salida);
+      }
+      .estructura__desplegable:active {
+        transform: scale(0.94);
       }
       .esta-abierto .estructura__navegacion {
         transform: none;
@@ -126,5 +139,12 @@ export class EstructuraAplicacion {
         takeUntilDestroyed(),
       )
       .subscribe(() => this.menuAbierto.set(false));
+
+    // Al iniciar o cerrar sesión también se cierra.
+    const autenticacion = inject(ServicioAutenticacion);
+    effect(() => {
+      autenticacion.usuario();
+      untracked(() => this.menuAbierto.set(false));
+    });
   }
 }

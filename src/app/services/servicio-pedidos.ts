@@ -1,12 +1,11 @@
 import { Injectable, computed, effect, inject, signal, untracked } from '@angular/core';
 import { Observable, map, tap, throwError } from 'rxjs';
 import { PaginaApi, PedidoApi, PedidoPeticionApi } from '../models/api';
-import { PaginaResultados } from '../models/pagina';
 import { EstadoPedido, FLUJO_PEDIDO, Pedido } from '../models/pedido';
 import { ServicioApi } from './servicio-api';
 import { ServicioAutenticacion } from './servicio-autenticacion';
 import { ServicioCarrito } from './servicio-carrito';
-import { estadoPedidoAApi, mapearPagina, mapearPedido } from '../utils/mapeadores';
+import { estadoPedidoAApi, mapearPedido } from '../utils/mapeadores';
 
 /** Estados de un pedido que todavía no se ha entregado ni cancelado. */
 const ESTADOS_EN_CURSO: EstadoPedido[] = ['pendiente', 'en_preparacion', 'listo'];
@@ -31,6 +30,9 @@ export class ServicioPedidos {
   );
   readonly pedidoActivo = computed(
     () => this.misPedidos().find((pedido) => ESTADOS_EN_CURSO.includes(pedido.estado)) ?? null,
+  );
+  readonly historial = computed(() =>
+    this.misPedidos().filter((pedido) => pedido !== this.pedidoActivo()),
   );
 
   /** Cola del barista: primero por estado, después por antigüedad. */
@@ -91,24 +93,6 @@ export class ServicioPedidos {
           this.cargando.set(false);
         },
       });
-  }
-
-  /**
-   * Historial del cliente paginado en la API: `GET /pedidos?clienteId=…&page=…&size=…&sort=fecha,desc`
-   * (endpoint 11, Q6). La API además limita a un cliente a sus propios pedidos con el token.
-   */
-  buscarMisPedidos(pagina: number, tamanoPagina: number): Observable<PaginaResultados<Pedido>> {
-    const clienteId = this.autenticacion.usuario()?.clienteId;
-    if (!clienteId)
-      return throwError(() => new Error('Inicia sesión como cliente para ver tus pedidos.'));
-    return this.api
-      .obtener<PaginaApi<PedidoApi>>('/pedidos', {
-        clienteId,
-        page: pagina,
-        size: tamanoPagina,
-        sort: 'fecha,desc',
-      })
-      .pipe(map((paginaApi) => mapearPagina(paginaApi, mapearPedido)));
   }
 
   siguienteEstado(estado: EstadoPedido): EstadoPedido | null {

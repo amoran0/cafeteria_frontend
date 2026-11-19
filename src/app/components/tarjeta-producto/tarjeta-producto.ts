@@ -34,15 +34,31 @@ import { EtiquetaEstado } from '../etiqueta-estado/etiqueta-estado';
   `,
   styles: `
     :host { display: block; }
-    .tarjeta-producto { display: flex; flex-direction: column; height: 100%; padding: 0; overflow: hidden; background: transparent; border: 0; border-radius: 0; box-shadow: none; text-decoration: none; transition: transform .15s; }
-    .tarjeta-producto:hover { transform: translateY(-2px); }
-    .tarjeta-producto__imagen { height: 112px; background: var(--color-arena); border-radius: var(--radio-tarjeta); overflow: hidden; }
-    .tarjeta-producto__imagen img { width: 100%; height: 100%; object-fit: cover; }
+    /* Tarjeta de la carta: foto, nombre a la izquierda y precio a la derecha. */
+    .tarjeta-producto { display: flex; flex-direction: column; height: 100%; padding: 0; overflow: visible; background: transparent; border: 0; border-radius: 0; box-shadow: none; text-decoration: none; color: inherit; }
+    .tarjeta-producto__imagen { aspect-ratio: 3 / 2; background: var(--color-arena); border-radius: var(--radio-tarjeta); overflow: hidden; box-shadow: var(--sombra-tarjeta); }
+    .tarjeta-producto__imagen img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--curva-salida); }
+    /* Sin foto: un plato dibujado con un aro fino en lugar de un hueco vacío. */
+    .tarjeta-producto__sin-imagen {
+      height: 100%;
+      background:
+        radial-gradient(circle at 50% 50%, transparent 0 22%, rgba(107, 44, 18, .08) 22.5% 23.5%, transparent 24%),
+        var(--color-arena);
+    }
+    .esta-agotado .tarjeta-producto__imagen { filter: grayscale(.85); opacity: .7; }
     .esta-agotado .tarjeta-producto__sin-imagen { opacity: .5; }
-    .tarjeta-producto__sin-imagen { height: 100%; background: var(--color-arena); }
-    .tarjeta-producto__informacion { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 14px 0 40px; text-align: center; }
-    .tarjeta-producto__titulo { display: flex; flex-direction: column; align-items: center; gap: 6px; }
-    .tarjeta-producto__datos { display: flex; align-items: center; justify-content: center; gap: 7px; }
+    .tarjeta-producto__informacion { display: flex; flex-direction: column; align-items: stretch; gap: 6px; padding: 16px 2px 28px; text-align: left; }
+    /* Con nombres de dos líneas, el precio se alinea con la última línea. */
+    .tarjeta-producto__titulo { display: flex; align-items: last baseline; justify-content: space-between; gap: 12px; }
+    .tarjeta-producto__titulo h3 { min-width: 0; text-underline-offset: 4px; }
+    .tarjeta-producto__titulo .precio { font-size: 16px; }
+    .tarjeta-producto__datos { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .esta-agotado h3 { color: var(--color-texto-atenuado); }
+    .tarjeta-producto:focus-visible { outline-offset: 6px; border-radius: var(--radio-tarjeta); }
+    @media (hover: hover) and (pointer: fine) {
+      .tarjeta-producto:hover .tarjeta-producto__imagen img { transform: scale(1.04); }
+      .tarjeta-producto:hover h3 { text-decoration: underline; }
+    }
   `,
 })
 export class TarjetaProducto {

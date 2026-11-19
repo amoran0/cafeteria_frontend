@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NEGOCIO } from '../../utils/negocio';
 import { Icono } from '../icono/icono';
 
-/** Pie de página compacto: marca, email, teléfono y ubicación. Va al final del área de contenido. */
+/** Pie de página compacto: marca, email, teléfono y ubicación.  */
 @Component({
   selector: 'app-pie-pagina',
   imports: [Icono],
@@ -34,16 +34,18 @@ import { Icono } from '../icono/icono';
       gap: 16px 32px;
       flex-wrap: wrap;
       min-height: 80px;
-      padding: 20px 40px 20px 24px;
+      padding: 24px 48px;
       background: var(--color-pie);
       border-top: 1px solid var(--color-pie-borde);
     }
     .pie__marca { display: flex; flex-direction: column; gap: 2px; }
-    .pie__nombre { font: 600 20px/1.2 var(--fuente-serif); color: var(--color-acento); }
-    .pie__lema { font: 400 12px/1.4 var(--fuente-sans); color: var(--color-pie-atenuado); }
-    .pie__contacto { display: flex; align-items: center; gap: 12px 32px; flex-wrap: wrap; font-style: normal; }
-    .pie__elemento { display: inline-flex; align-items: center; gap: 8px; font: 400 13px var(--fuente-sans); color: var(--color-arena); text-decoration: none; }
-    a.pie__elemento:hover { text-decoration: underline; }
+    .pie__nombre { font: 800 20px/1.2 var(--fuente-sans); color: var(--color-acento); }
+    .pie__lema { font: 400 13px/1.4 var(--fuente-sans); color: var(--color-pie-atenuado); }
+    .pie__contacto { display: flex; align-items: center; gap: 12px 28px; flex-wrap: wrap; font-style: normal; }
+    .pie__elemento { display: inline-flex; align-items: center; gap: 8px; font: 400 14px var(--fuente-sans); color: var(--color-barra-lateral-suave); text-decoration: none; transition: color .18s ease; }
+    a.pie__elemento:hover { color: var(--color-acento); text-decoration: underline; text-underline-offset: 3px; }
+    a.pie__elemento:focus-visible { outline-color: var(--color-acento); }
+    @media (max-width: 900px) { .pie { padding: 24px 16px; } }
     .pie__icono { color: var(--color-acento); }
   `,
 })

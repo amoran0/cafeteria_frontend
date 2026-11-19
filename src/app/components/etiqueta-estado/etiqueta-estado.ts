@@ -30,15 +30,11 @@ const TEXTO_Y_TONO_POR_ESTADO: Record<string, [string, TonoEtiqueta]> = {
   selector: 'app-etiqueta-estado',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { style: 'display:inline-flex' },
-  template: `<span class="insignia" [class]="'insignia insignia--' + tonoFinal()" [class.insignia--texto]="textoPlano()" [class.insignia--estado-producto]="estado() === 'disponible' || estado() === 'agotado'">{{ textoFinal() }}</span>`,
+  template: `<span [class]="'insignia insignia--' + tonoFinal()" [class.insignia--texto]="textoPlano()">{{ textoFinal() }}</span>`,
   styles: `
+    /* En las tarjetas de la carta, algo más pequeña para no competir con el nombre. */
     .insignia--texto {
-      padding: 0;
-      background: transparent;
-      font-weight: 800;
-    }
-    .insignia--estado-producto {
-      font-weight: 900;
+      font-size: 13px;
     }
   `,
 })

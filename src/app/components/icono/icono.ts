@@ -1,10 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
-/**
- * Iconos de Lucide (https://lucide.dev, licencia ISC) usados en el mockup,
- * con nombres en español. Cada valor es el contenido SVG del icono original.
- */
+
 const TRAZADOS_SVG_POR_ICONO = {
   buscar: '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
   'bolsa-compra': '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>',

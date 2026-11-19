@@ -46,13 +46,34 @@ import { Icono } from '../icono/icono';
   `,
   styles: `
     .paginador {
-      display: flex;
+      display: inline-flex;
       justify-content: center;
-      gap: 6px;
+      gap: 4px;
       flex-wrap: wrap;
+      padding: 5px;
+      border: 1px solid var(--color-borde);
+      border-radius: var(--radio-pildora);
+      background: var(--color-superficie);
+      box-shadow: var(--sombra-tarjeta);
+    }
+    .chip {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border-color: transparent;
+      background: transparent;
+      font-variant-numeric: tabular-nums;
+    }
+    .chip:hover:not(:disabled):not(.esta-activo) {
+      border-color: transparent;
+      background: var(--color-arena);
+    }
+    .chip.esta-activo {
+      background: var(--color-barra-lateral);
+      color: var(--color-acento);
     }
     .chip:disabled {
-      opacity: 0.4;
+      opacity: 0.35;
       cursor: not-allowed;
     }
   `,

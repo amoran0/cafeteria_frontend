@@ -7,7 +7,7 @@ import {
   PaginaApi,
   ProductoApi,
 } from '../models/api';
-import { Alergeno, Categoria, EstadoProducto, GrupoCarta, Producto } from '../models/producto';
+import { Alergeno, Categoria, EstadoProducto, Producto } from '../models/producto';
 import { PaginaResultados } from '../models/pagina';
 import { ServicioApi } from './servicio-api';
 import { FiltrosCarta, parametrosDeFiltrosCarta } from '../utils/filtros-carta';
@@ -169,8 +169,8 @@ export class ServicioProductos {
     );
   }
 
-  /** Crea una categoría (`POST /categorias`). El grupo de los filtros rápidos es solo de presentación. */
-  crearCategoria(nombre: string, _grupo: GrupoCarta = 'comida'): Observable<Categoria> {
+  /** Crea una categoría (`POST /categorias`). */
+  crearCategoria(nombre: string): Observable<Categoria> {
     return this.api.crear<CategoriaApi>('/categorias', { nombre: nombre.trim() }).pipe(
       map((categoriaCreada) => mapearCategoria(categoriaCreada)),
       tap((categoriaCreada) =>

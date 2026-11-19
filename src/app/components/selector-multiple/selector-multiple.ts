@@ -48,12 +48,12 @@ import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, input
       top: 100%;
       left: 0;
       right: 0;
-      margin-top: 4px;
+      margin-top: 6px;
       padding: 6px;
       border: 1px solid var(--color-borde);
-      border-radius: var(--radio-tarjeta);
+      border-radius: var(--radio-campo);
       background: var(--color-superficie);
-      box-shadow: var(--sombra-tarjeta);
+      box-shadow: var(--sombra-flotante);
     }
     .selector-multiple__opcion {
       display: flex;
@@ -66,11 +66,15 @@ import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, input
     .selector-multiple__opcion:hover {
       background: var(--color-arena);
     }
+    /* Marcado: casilla espresso y texto en negrita, igual que el resto de filtros activos. */
+    .selector-multiple__opcion:has(input:checked) {
+      font-weight: 700;
+    }
     .selector-multiple__opcion input {
       margin: 0;
       width: 16px;
       height: 16px;
-      accent-color: var(--color-primario);
+      accent-color: var(--color-barra-lateral);
       cursor: pointer;
     }
   `,

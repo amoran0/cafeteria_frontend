@@ -16,8 +16,9 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
     </header>
   `,
   styles: `
-    .cabecera-pagina { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
-    .cabecera-pagina__texto { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .cabecera-pagina { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; padding-bottom: 22px; border-bottom: 1px solid var(--color-borde); }
+    .cabecera-pagina__texto { display: flex; flex-direction: column; gap: 8px; min-width: 0; max-width: 68ch; }
+    .cabecera-pagina__texto p { font-size: 15px; }
     .cabecera-pagina__acciones { display: flex; gap: 10px; align-items: center; }
   `,
 })
